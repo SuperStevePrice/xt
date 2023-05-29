@@ -1,0 +1,13 @@
+# Ignore the "logs" directory:
+logs/
+
+# Ignore certain documents:
+*.txt
+
+# Ignore which.* files:
+prep/which.*
+
+# Ignore *.save, *.backup, and nohup.out  files:
+*.save
+*backup
+nohup.out

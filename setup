@@ -1,0 +1,28 @@
+#!/usr/bin/env ksh
+
+#-------------------------------------------------------------------------------
+#         Copyright (C) 2023    Steve Price    SuperStevePrice@gmail.com
+#
+#                       GNU GENERAL PUBLIC LICENSE
+#                        Version 3, 29 June 2007
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# PROGRAM:
+#	setup
+#	
+# PURPOSE:
+#	Invoke setup.ksh and write STDOUT and STDERR to logs/setup.out.
+#	
+# USAGE:
+#	ksh setup 
+#-------------------------------------------------------------------------------
+
+if [ ! -d logs ]
+then
+	mkdir logs
+fi
+
+log=logs/setup.log 
+setup.ksh > $log 2>&1
+view $log
