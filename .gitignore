@@ -11,3 +11,6 @@ prep/which.*
 *.save
 *backup
 nohup.out
+
+# Ignore xterm Xterm.log.* files:
+Xterm.log.*
