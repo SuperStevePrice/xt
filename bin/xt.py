@@ -6,52 +6,115 @@ import os
 import tkinter as tk
 
 
-def Xterm(x_bg, x_fg):
+def set_globals():
+    global x_cols
+    global x_rows
+    global x_sl
+    global x_bg
+    global x_fg
+    global x_fa
+    global x_fs
+    global x_log
+    global entry_cols
+    global frame
+    global frame_types
+    global top
+    global entry_font
+    global entry_font_size
+
+    entry_cols = define_entries()
+
+    # Read the .xtrc or ~/.xtrc file
+    try:
+        with open('.xtrc', 'r') as file:
+            config_lines = file.readlines()
+        except FileNotFoundError:
+            try:
+                with open(os.path.expanduser('~/.xtrc'), 'r') as file:
+                    config_lines = file.readlines()
+                except FileNotFoundError:
+                    print("No .xtrc or ~/.xtrc file found.")
+                    return
+
+                # Parse the configuration lines
+                for line in config_lines:
+                    line = line.strip()
+                    if line.startswith('#'):
+                        continue
+                    if line.startswith('x_cols'):
+                        x_cols = line.split( '=')[1].strip()
+                        elif line.startswith('x_rows'):
+                            x_rows = line.split( '=')[1].strip()
+                        elif line.startswith('x_sl'):
+                            x_sl = line.split( '=')[1].strip()
+                        elif line.startswith('x_fa'):
+                            x_fa = line.split( '=')[1].strip().replace(' ', '')
+                        elif line.startswith('x_fs'):
+                            x_fs = line.split( '=')[1].strip()
+                        elif line.startswith('x_log'):
+                            x_log = int( line.split('=')[1].strip())
+
+                    # Update the entry fields with the parsed values
+                    try:
+                        entry_cols.delete( 0, tk.END)
+                        entry_cols.insert( 0, x_cols)
+                        entry_rows.delete( 0, tk.END)
+                        entry_rows.insert( 0, x_rows)
+                        entry_font_size.delete( 0, tk.END)
+                        entry_font_size.insert( 0, x_sl)
+                        entry_font.delete( 0, tk.END)
+                        entry_font.insert( 0, x_fa)
+
+                        var_log.set( x_log) except NameError as e:
+                            print( "Error:", e)
+
+
+    def Xterm(x_bg, x_fg):
     # Snatch the date from the scalar localtime():
     date = time.strftime('%c')
 
     # Create a window title from $env(LOGNAME), $host, and date:
-    title = f"{os.environ['LOGNAME']}@{host}   {date}"
+    title = f"{os.environ['LOGNAME']}@{'HOST'}   {date}"
 
     # Create a geometry setting from columns and rows:
     x_geo = f"{x_cols}x{x_rows}"
 
-    cmd = f"nohup /usr/bin/env xterm -ls -sb -sl {x_sl}"
+        cmd = f"nohup /usr/bin/env xterm -ls -sb -sl {x_sl}"
 
-    if x_fa:
-        cmd += f" -fa \"{x_fa}\""
+        if x_fa:
+            cmd += f" -fa \"{x_fa}\""
 
-    if x_fs:
-        cmd += f" -fs \"{x_fs}\""
+        if x_fs:
+            cmd += f" -fs \"{x_fs}\""
 
-    if not x_fa:
-        # Parsing failed. Use fallback font.
-        cmd += " -fa \"9x15bold\""
+        if not x_fa:
+            # Parsing failed. Use fallback font.
+            cmd += " -fa \"9x15bold\""
 
-    if not x_fs:
-        # Parsing failed. Use fallback font.
-        cmd += " -fa 16"
+        if not x_fs:
+            # Parsing failed. Use fallback font.
+            cmd += " -fa 16"
 
-    cmd += f" -geometry {x_geo} -fg {x_fg} -bg {x_bg} -title \"{title}\""
-    cmd += " -l" if x_log else ""
+        cmd += f" -geometry {x_geo} -fg {x_fg} -bg {x_bg} -title \"{title}\""
+        cmd += " -l" if x_log else ""
 
-    # Uncomment the line below to debug the cmd:
-    # print(f"DEBUG: cmd={cmd}")
+# Uncomment the line below to debug the cmd:
+# print(f"DEBUG: cmd={cmd}")
 
-    subprocess.Popen(cmd, shell=True)
+subprocess.Popen(cmd, shell=True)
 
 
 def create_specific_Xterm_buttons():
-    colors = [
-        ("grey", "black"),
-        ("LightSteelBlue", "navy"),
-        ("CadetBlue", "white"),
-        ("CadetBlue", "black"),
-        ("blue", "white"),
-        ("navy", "white"),
-        ("navy", "orange"),
-        ("navy", "yellow"),
-        ("DarkGreen", "white"),
+colors = [
+    ("grey", "black"),
+    ("LightSteelBlue", "navy"),
+    ("CadetBlue", "white"),
+    ("CadetBlue", "black"),
+    ("blue", "white"),
+    ("navy", "white"),
+    ("navy", "orange"),
+    ("navy", "yellow"),
+    ("DarkGreen", "white"),
         ("DarkSeaGreen", "black"),
         ("DarkRed", "white"),
         ("salmon", "black"),
@@ -123,12 +186,14 @@ def define_entries():
     entry_font_size.insert(0, "16")
     entry_font_size.pack(side="left")
 
+
 def set_geometry():
     global x_rows
     global x_cols
 
     x_rows = entry_rows.get()
     x_cols = entry_cols.get()
+
 
 def set_font_attributes():
     global x_fa
@@ -137,10 +202,12 @@ def set_font_attributes():
     x_fa = entry_font.get()
     x_fs = entry_font_size.get()
 
+
 def set_log_var():
     global x_log
 
     x_log = var_log.get()
+
 
 def destroy_window():
     root.destroy()
@@ -203,6 +270,3 @@ if __name__ == "__main__":
     create_specific_Xterm_buttons()
 
 root.mainloop()
-# -------------------------------------------------------------------------------
-# Last installed: 2023-05-31 09:43:51
-# -- End of File ----------------------------------------------------------------
