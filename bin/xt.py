@@ -62,22 +62,22 @@ def on_button_press(button):
 
     # Build the xterm command
     cmd =  \
-        xterm_path                                      + \
-        " -sb "                                          + \
-        " -sl "                                          + \
-        xtrc_data['x_sl']                               + \
+        xterm_path                                        + \
+        " -sb "                                           + \
+        " -sl "                                           + \
+        xtrc_data['x_sl']                                 + \
         " -fa "                                           + \
-        f"'{xtrc_data['x_fa']}'"                        + \
+        f"'{xtrc_data['x_fa']}'"                          + \
         " -fs "                                           + \
-        xtrc_data['x_fs']                               + \
+        xtrc_data['x_fs']                                 + \
         " -geometry "                                     + \
-        f"{xtrc_data['x_cols']}x{xtrc_data['x_rows']}"  + \
+        f"{xtrc_data['x_cols']}x{xtrc_data['x_rows']}"    + \
         " -fg "                                           + \
-        fg_color                                        + \
+        fg_color                                          + \
         " -bg "                                           + \
-        bg_color                                        + \
-        log                                             + \
-        " -title "                                      + \
+        bg_color                                          + \
+        log                                               + \
+        " -title "                                        + \
         f"'{os.environ['USER']}@{os.environ['HOME']} {dt.datetime.now()}'"
 
     #print("\nDEBUG: cmd=", cmd)
