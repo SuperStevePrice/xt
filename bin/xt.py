@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
+import datetime as dt  # Rename the imported datetime module
+import os
 import tkinter as tk
 import subprocess
 
 import xtrc
-
+from xtrc import report
 
 colors = [
     ("grey", "black"),
@@ -30,11 +32,13 @@ num_rows = (len(colors) + 1) // 2
 
 
 xtrc_data = xtrc.set_globals()
-#print(xtrc_data)
+#print("\nDEBUG:")
+#report()
+
 
 root = tk.Tk()
 root.geometry('500x600')
-root.title('Button color demo !!')
+root.title('Xterm Dashboard')
 
 # Set the background color of the root window to black
 root.configure(bg='black')
@@ -49,11 +53,34 @@ def on_button_press(button):
     bg_color, fg_color = button.color_pair
 
     xterm_path = f"{xtrc_data['x_path']}/xterm"
-    cmd = f"{xtrc_data['x_path']}/xterm -sl {xtrc_data['x_sl']} " \
-        f"-geometry {xtrc_data['x_cols']}x{xtrc_data['x_rows']} " \
-        f"-fa {xtrc_data['x_fa']} -fs {xtrc_data['x_fs']} " \
-        f"-title \"Steve\'s Term Window\" -fg {fg_color} " \
-        f"-bg {bg_color}"
+    enable_keystroke_logging = xtrc_data.get('x_log', '0')
+
+    if enable_keystroke_logging != '0':
+        log = " -l "
+    else:
+        log = ""
+
+    # Build the xterm command
+    cmd =  \
+        xterm_path                                      + \
+        " -sb "                                          + \
+        " -sl "                                          + \
+        xtrc_data['x_sl']                               + \
+        " -fa "                                           + \
+        f"'{xtrc_data['x_fa']}'"                        + \
+        " -fs "                                           + \
+        xtrc_data['x_fs']                               + \
+        " -geometry "                                     + \
+        f"{xtrc_data['x_cols']}x{xtrc_data['x_rows']}"  + \
+        " -fg "                                           + \
+        fg_color                                        + \
+        " -bg "                                           + \
+        bg_color                                        + \
+        log                                             + \
+        " -title "                                      + \
+        f"'{os.environ['USER']}@{os.environ['HOME']} {dt.datetime.now()}'"
+
+    #print("\nDEBUG: cmd=", cmd)
 
     if xterm_path is not None:
         # xterm executable found
