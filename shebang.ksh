@@ -75,7 +75,6 @@ make_bin_dir
 
 # Shell shebang lines for ksh and perl and relative path for xterm
 make_shebang ksh xt.ksh
-make_shebang ksh PS1.ksh
 make_shebang perl xt.pl
 
 print "ls -l $bin_dir"
