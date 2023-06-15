@@ -23,6 +23,8 @@
 #-------------------------------------------------------------------------------
 typeset -i line_count
 
+platform=$(uname)
+
 # final lines of each file installed by this script
 timestamp="# Last installed: $(printf "%(%Y-%m-%d %H:%M:%S)T")"
 line=$(print "#$(printf -- '-%.0s' {1..79})")
@@ -51,7 +53,33 @@ mkdir -p $public_home >/dev/null 2>&1
 mkdir -p $public_bin >/dev/null 2>&1
 mkdir -p $bin_backup_dir >/dev/null 2>&1
 mkdir -p $home_backup_dir >/dev/null 2>&1
-mkdir -p docs > /dev/null 2&1
+
+create_xt_py() {
+    #---------------------------------------------------------------------------
+    # Function create_xt_py()
+    # Purpose:
+    #   Create a platform specific version of xt.py.
+    #
+    # Usage:
+    #   create_xt_py
+    #---------------------------------------------------------------------------
+    
+    if [ X"$platform" == X"Darwin" ]
+    then
+        version=MacOSX
+        shebang="#!/Users/steve/anaconda3/bin/python3.10"
+        tksource="tkmacosx"
+    else
+        version=Linux
+        shebang="#!/usr/bin/env python3"
+        tksource="tkinter"
+    fi
+
+    cat templates/xt.py.template |\
+        sed -e "s~XXX_SHEBANG~$shebang~" |\
+        sed -e "s/XXX_VERSION/$version/"                                    |\
+        sed -e "s/XXX_TKSOURCE/$tksource/" > bin/xt.py
+} # create_xt_py() 
 
 remove_final_lines() {
 	#---------------------------------------------------------------------------
@@ -63,10 +91,8 @@ remove_final_lines() {
 	#	lines.	The 3 lines removed are the Last installed trailing lines of 
 	#	installed files. See final_lines variable.
 	#	
-	#	
 	# USAGE:
 	#	remove_final_lines file
-	#
 	#---------------------------------------------------------------------------
 	typeset -i line_count=0
 
@@ -149,7 +175,7 @@ make_installation_list() {
 	# Loop over all candidate bin files:
 	for file in $(print $bins)
 	do
-		#print "$0: $bin_dir/$file"
+		print "$0: $bin_dir/$file"
 
 		folder=$(dirname $file)
 		file=$(basename $file)
@@ -340,7 +366,7 @@ set_symbolic_links() {
 		fi
 		sym="${file%.*sh}"
 		if [ ! -f "$sym" -o ! -h "$sym" ]; then
-			print ln -s ${file} ${sym}
+			print "ln -s ${file} ${sym}"
 			ln -s ${file} ${sym}
 		fi
 	done
@@ -348,6 +374,9 @@ set_symbolic_links() {
 
 # Make shebang lines for ksh and perl
 source shebang.ksh
+
+# Create bin/xt.py:
+create_xt_py
 
 # Make a list of artifacts to be installed as a new or a new version.
 make_installation_list
