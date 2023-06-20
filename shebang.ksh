@@ -9,14 +9,14 @@
 
 #-------------------------------------------------------------------------------
 # PROGRAM:
-#	bin.ksh
+#	shebang.ksh
 #	
 # PURPOSE:
 #	This script is part of the installation suite for the ShellSetup project.
 #	It creates the appropriate shebang lines for ksh and perl scripts.
 #	
 # USAGE:
-#	bin.ksh
+#	shebang.ksh
 #
 #-------------------------------------------------------------------------------
 
@@ -75,6 +75,7 @@ make_bin_dir
 
 # Shell shebang lines for ksh and perl and relative path for xterm
 make_shebang ksh xt.ksh
+make_shebang ksh PS1.ksh
 make_shebang perl xt.pl
 
 print "ls -l $bin_dir"
