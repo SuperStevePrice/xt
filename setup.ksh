@@ -66,6 +66,7 @@ create_xt_py() {
     #   create_xt_py
     #---------------------------------------------------------------------------
     
+    print "Function create_xt_py(): Creating bin/xt.py\n"
     if [ X"$platform" == X"Darwin" ]
     then
         version=MacOSX
@@ -90,7 +91,8 @@ create_xt_ksh() {
     #   create_xt_ksh
     #
     # Purpose:
-    #   Create bin/xt.ksh which calls xt.pl using a compatible perl version.
+    #   Create bin/xt.ksh which calls xt.pl using a compatible perl 
+    #   version.
     #
     # Usage:
     #   create_xt_ksh
@@ -98,6 +100,7 @@ create_xt_ksh() {
 
     perl_executables=$(find / -name "perl*" -type f -executable 2>/dev/null)
 
+    print "Function create_xt_ksh(): Creating bin/xt.ksh\n"
     for perl_executable in $perl_executables; do
         perl_lib_path=$(dirname $(dirname $perl_executable))/lib
 
@@ -164,6 +167,7 @@ make_installation_list() {
 	installation_list=docs/installation_list.txt
 	> $installation_list
 
+    print "\nHandling dot files:\n"
 	# Loop over all candidate dot files:
 	for file in $(print $dots)
 	do
@@ -206,6 +210,7 @@ make_installation_list() {
 		print
 	done
 
+    print "\nHandling bin files:\n"
 	# Loop over all candidate bin files:
 	for file in $(print $bins)
 	do
@@ -226,10 +231,10 @@ make_installation_list() {
 		if [ ! -f $bin_home_dir/${file} -o ! -s $bin_home_dir/${file} ]
         then
             install="y"
-            echo "Not found $bin_home_dir/.${file}"
+            echo "Not found $bin_home_dir/${file}"
         else
             install=n
-            echo "Found $bin_home_dir/.${file}"
+            echo "Found $bin_home_dir/${file}"
         fi
 
 		# Strip the Last installed markers from the target.
