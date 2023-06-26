@@ -1,4 +1,4 @@
-#!/Users/steve/anaconda3/bin/python3.10
+XXX_SHEBANG
 
 ## Linux use: "#!/usr/bin/env python3".
 ## MacOS use: "#!/Users/steve/anaconda3/bin/python3.10"
@@ -27,13 +27,16 @@
 #                           selected_font = font_selector.run_font_selector()
 #
 # PLATFORM:
-#   MacOSX
+#   XXX_PLATFORM
 #-------------------------------------------------------------------------------
 
 
 
 import subprocess
 import tkinter as tk
+import xtrc as xt
+
+
 
 class FontSelectorDialog:
     def __init__(self):
@@ -78,7 +81,10 @@ class FontSelectorDialog:
         self.listbox.bind('<<ListboxSelect>>', self.select_font)
 
     def get_available_fonts(self):
-        process = subprocess.Popen(['/opt/X11/bin/xlsfonts'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        xtrc = xt.set_xtrc()
+        xlsfonts = xtrc['x_path'] + "/xlsfonts"
+        process = subprocess.Popen([xlsfonts], 
+            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
         output, _ = process.communicate()
         available_fonts = output.decode('utf-8').splitlines()
         return available_fonts
