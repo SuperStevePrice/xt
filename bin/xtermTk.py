@@ -1,5 +1,28 @@
-#!/usr/bin/env python
+#!/Users/steve/anaconda3/bin/python3.10
 
+## Linux use: "#!/usr/bin/env python3".
+## MacOS use: "#!/Users/steve/anaconda3/bin/python3.10"
+
+#-------------------------------------------------------------------------------
+#         Copyright (C) 2023    Steve Price    SuperStevePrice@gmail.com
+#
+#                       GNU GENERAL PUBLIC LICENSE
+#                        Version 3, 29 June 2007
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# PROGRAM:
+#	xtermTk.py
+#	
+# PURPOSE:
+#	This Python program presents a simple widget window 
+#	
+# USAGE:
+#   xtermTk.py
+#
+# PLATFORM:
+#   MacOSX
+#-------------------------------------------------------------------------------
 import os
 import socket
 from datetime import datetime
@@ -9,6 +32,12 @@ import subprocess
 import locale 
 import argparse
 
+# The locale code below is commented out because it apparently prevents xterm
+# windows from being visible.   The code was added to silence warnings about 
+# locale settings.  As they are only warnings and do not impact the operation
+# of this script, I will live with them.  I leave this code behind in case I 
+# understand this locale stuff better in the future:
+#
 # # Get the system's default locale
 # system_locale = locale.getdefaultlocale()
 

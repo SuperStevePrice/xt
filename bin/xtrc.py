@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/Users/steve/anaconda3/bin/python3.10
+
+## Linux use: "#!/usr/bin/env python3".
+## MacOS use: "#!/Users/steve/anaconda3/bin/python3.10"
 
 #-------------------------------------------------------------------------------
 #         Copyright (C) 2023    Steve Price    SuperStevePrice@gmail.com
@@ -17,6 +20,9 @@
 #   
 # USAGE:
 #   import xtrc
+#
+# PLATFORM:
+#   MacOSX
 #-------------------------------------------------------------------------------
 import datetime as dt
 import os
