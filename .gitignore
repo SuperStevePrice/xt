@@ -12,8 +12,5 @@ prep/which.*
 *backup
 nohup.out
 
-# Ignore set_globals.py, which became xtrc.py:
-bin/set_globals.py
-
 # Ignore bin/*.py. These will be created from templates used by setup.ksh:
 bin/*.py
