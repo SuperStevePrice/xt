@@ -1,3 +1,0 @@
-#!/usr/bin/env ksh
-
-~/bin/xt.py 2>/dev/null &
