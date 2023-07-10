@@ -270,8 +270,24 @@ backup_install() {
                 $cp ${path}/${base} ${installed_path}/${base}
             fi
 
+            if [ "$file" == "xtrc" ]
+            then
+                x_path=$(which xterm)
+                x_path=$(dirname $x_path)
+                sed "s!^x_path=.*!x_path=$x_path!" dots/xtrc > ~/.${file}
+            fi
+
             print "add_last_lines ${file}"
             add_last_lines ${file}
+
+            if [ $path == "docs" ]; then
+                print "chmod 644 $file"
+                chmod 644 $file
+            else
+                print "chmod 755 $file"
+                chmod 755 $file
+            fi
+
 
             print ${file} >> logs/installation_list.log
             print "Installed file: $file"
