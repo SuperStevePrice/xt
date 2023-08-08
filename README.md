@@ -9,7 +9,6 @@ Set up scripts will simply the installation of this repositories components to
 the users' servers.
 
 Perl xt.pl:
-
 ![Screenshot](images/xt perl.png)
 
 
