@@ -9,8 +9,8 @@ Set up scripts will simply the installation of this repositories components to
 the users' servers.
 
 Perl xt.pl:
-![Alt Text](images/xt perl.png)
+![Alt Text](images/xt perl.png?raw=true "xt.pl")
 
 
 Python xt.py:
-![Alt Text](images/xt python.png)
+![Alt Text](images/xt python.png?raw=true "xt.py")
