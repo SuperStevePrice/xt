@@ -6,10 +6,12 @@ Perl script, xt.pl, can be executed directly, or it may be launched via xt.ksh, 
 Python script, xt.py, can be executed directly, or it may be launched via xtpy, a ksh script to set the environment and launch xt.pl.
 
 Set up scripts will simplify the installation of this repository's components on the users' servers.
-<br><br>
-Perl xt.pl: <br><br>
-<img src="images/xt%20perl.png" alt="xt.pl" width="400">
-<br><br>
-Python xt.py: <br><br>
-<img src="images/xt%20python.png" alt="xt.py" width="400">
-<br><br>
+
+Perl xt.pl: 
+![xt perl](assets/xt%20perl.png)
+
+
+
+Python xt.py: 
+![xt python](assets/xt%20python.png)
+
